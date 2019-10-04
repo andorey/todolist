@@ -13,13 +13,15 @@ class App extends React.Component {
 		{title: 'Angular', isDone: true, priority: 'middle'},
 	];
 
+	filterValue = 'Completed';
+
 	render = () => {
 		return (
 			<div className="App">
 				<div className="todoList">
 					<TodoListHeader />
 					<TodoListTasks tasks={this.tasks}/>
-					<TodoListFooter filterValue={'All'}/>
+					<TodoListFooter filterValue={this.filterValue}/>
 				</div>
 			</div>
 		);
