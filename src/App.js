@@ -5,24 +5,25 @@ import TodoListTasks from "./TodoListTasks";
 import TodoListFooter from "./TodoListFooter";
 
 class App extends React.Component {
-    tasks = [
-        {title: 'CSS', isDone: true},
-        {title: 'JS', isDone: false},
-        {title: 'ReactJS', isDone: false},
-        {title: 'Patterns', isDone: true},
 
-    ];
-    render = () => {
-        return (
-            <div className="App">
-                <div className="todoList">
-                    <TodoListHeader />
-                    <TodoListTasks tasks={this.tasks}/>
-                    <TodoListFooter />
-                </div>
-            </div>
-        );
-    }
+	tasks = [
+		{title: 'CSS', isDone: true, priority: 'low'},
+		{title: 'HTML', isDone: false, priority: 'high'},
+		{title: 'React', isDone: false, priority: 'low'},
+		{title: 'Angular', isDone: true, priority: 'middle'},
+	];
+
+	render = () => {
+		return (
+			<div className="App">
+				<div className="todoList">
+					<TodoListHeader />
+					<TodoListTasks tasks={this.tasks}/>
+					<TodoListFooter />
+				</div>
+			</div>
+		);
+	}
 }
 
 export default App;
