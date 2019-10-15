@@ -9,7 +9,8 @@ class TodoListTask extends React.Component {
 	render = () => {
 		return (
 			<div className="todoList-task">
-				<input onClick={this.onIsDoneChanged} type="checkbox" checked={this.props.task.isDone}/>
+				<input onClick={this.onIsDoneChanged} type="checkbox"
+					   checked={this.props.task.isDone}/>
 				<span>{this.props.task.title}, priority: {this.props.task.priority}</span>
 			</div>
 		);
