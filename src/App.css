@@ -7,8 +7,8 @@
 	margin: 0 auto;
 }
 
-.todoList > div {
-	padding: 10px;
+.todoList div {
+	padding: 3px;
 }
 
 .todoList-task {
@@ -17,4 +17,12 @@
 
 .filter-active {
 	background-color: dodgerblue;
+}
+
+button {
+	font-size: 18px;
+}
+
+.error {
+	border-color: red;
 }

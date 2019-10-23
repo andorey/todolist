@@ -52,7 +52,7 @@ class App extends React.Component {
 			<div className="App">
 				<div className="todoList">
 					<TodoListHeader addTask={this.addTask}/>
-					<TodoListTasks changeTaskStatus={this.changeTaskStatus}
+					<TodoListTasks change={this.changeTaskStatus}
 								   tasks={this.state.tasks.filter(t => {
 										   if (this.state.filterValue === 'All') {
 											   return true;
@@ -66,7 +66,7 @@ class App extends React.Component {
 									   }
 								   )}/>
 					<TodoListFooter filterValue={this.state.filterValue}
-									onChangeFilter={this.changeFilterValue}/>
+									onChangeFilter={this.changeFilterValue} />
 				</div>
 			</div>
 		);
