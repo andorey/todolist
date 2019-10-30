@@ -7,66 +7,103 @@ import TodoListFooter from "./TodoListFooter";
 class App extends React.Component {
 
 	state = {
-		tasks: [
-			{title: 'CSS', isDone: true, priority: 'low'},
-			{title: 'HTML', isDone: false, priority: 'high'},
-			{title: 'React', isDone: false, priority: 'low'},
-			{title: 'Angular', isDone: true, priority: 'middle'},
-		],
+		tasks: [],
 		filterValue: 'All'
 	};
 
+	nextTaskId = 0;
+
+	saveState = () => {
+		let stateAsString = JSON.stringify(this.state);
+		localStorage.setItem('our-state', stateAsString);
+	};
+
+	restoreState = () => {
+		let state = {
+			tasks: [],
+			filterValue: 'All'
+		};
+		let stateAsString = localStorage.getItem('our-state');
+		if(stateAsString !== null){
+			state = JSON.parse(stateAsString);
+		}
+		this.setState(state, () => {this.state.tasks.forEach(t => {
+			if(t.id >= this.nextTaskId){
+				this.nextTaskId = t.id + 1;
+			}
+		})});
+	};
+
+	componentDidMount() {
+		this.restoreState();
+	};
+
+
 	addTask = (newTitle) => {
 		let newTask = {
+			id: this.nextTaskId,
 			title: newTitle,
 			isDone: false,
 			priority: 'high'
 		};
+		this.nextTaskId++;
 		let newTasks = [...this.state.tasks, newTask];
 		this.setState({
 			tasks: newTasks
-		})
+		}, this.saveState);
 	};
 
 	changeFilterValue = (newFilterValue) => {
 		this.setState({
 			filterValue: newFilterValue
-		})
+		}, this.saveState);
 	};
 
-	changeTaskStatus = (task, isDone) => {
+	changeTaskStatus = (taskId, isDone) => {
+		this.changeTask(taskId, {isDone:  isDone})
+	};
+
+	changeTitle = (taskId, newTitle) => {
+		this.changeTask(taskId, {title: newTitle})
+	};
+
+
+	changeTask = (taskId, newPropsObj) => {
 		let newTasks = this.state.tasks.map(t => {
-			if (t !== task) {
+			if (t.id !== taskId) {
 				return t;
 			} else {
-				return {...t, isDone: isDone}
+				return {...t, ...newPropsObj}
 			}
 		});
 		this.setState({
 			tasks: newTasks
-		})
+		}, this.saveState);
 	};
+
 
 	render = () => {
 		return (
 			<div className="App">
 				<div className="todoList">
 					<TodoListHeader addTask={this.addTask}/>
-					<TodoListTasks change={this.changeTaskStatus}
-								   tasks={this.state.tasks.filter(t => {
-										   if (this.state.filterValue === 'All') {
-											   return true;
-										   }
-										   if (this.state.filterValue === 'Active') {
-											   return !t.isDone;
-										   }
-										   if (this.state.filterValue === 'Completed') {
-											   return t.isDone;
-										   }
-									   }
-								   )}/>
+					<TodoListTasks
+						change={this.changeTaskStatus}
+						changeTitle={this.changeTitle}
+						tasks={this.state.tasks.filter(t => {
+								if (this.state.filterValue === 'All') {
+									return true;
+								}
+								if (this.state.filterValue === 'Active') {
+									return !t.isDone;
+								}
+								if (this.state.filterValue === 'Completed') {
+									return t.isDone;
+								}
+							}
+						)}/>
 					<TodoListFooter filterValue={this.state.filterValue}
-									onChangeFilter={this.changeFilterValue} />
+									onChangeFilter={this.changeFilterValue}/>
 				</div>
 			</div>
 		);
