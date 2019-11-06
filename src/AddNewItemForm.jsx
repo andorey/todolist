@@ -7,14 +7,14 @@ class AddNewItemForm extends React.Component {
 		title: ""
 	};
 
-	onAddTaskClick = () => {
+	onAddItemClick = () => {
 		let newTitle = this.state.title;
 		if (newTitle.trim() === '') {
 			this.setState({error: true});
 		} else {
 			this.setState({error: false});
 			this.setState({title: ""});
-			this.props.addTask(newTitle);
+			this.props.addItem(newTitle);
 		}
 	};
 
@@ -28,7 +28,7 @@ class AddNewItemForm extends React.Component {
 
 	oneAddTaskKeyPress = (e) => {
 		if (e.key === 'Enter') {
-			this.onAddTaskClick();
+			this.onAddItemClick();
 		}
 	};
 
@@ -44,7 +44,7 @@ class AddNewItemForm extends React.Component {
 					   onKeyPress={this.oneAddTaskKeyPress}
 					   value={this.state.title}
 				/>
-				<button onClick={this.onAddTaskClick}>Add</button>
+				<button onClick={this.onAddItemClick}>Add</button>
 			</div>
 		);
 	}
